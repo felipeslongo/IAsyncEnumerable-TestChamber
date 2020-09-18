@@ -15,13 +15,18 @@ namespace IAsyncEnumerable.ConsoleApp
             var userQuitTask = AwaitUserQuitAsync();
 
             var task = RangeAsync(cancellationTokenSource.Token);
-            
-            if (await Task.WhenAny(task, userQuitTask) == userQuitTask)
-                Console.WriteLine("User quit requested");
-            else
-                Console.WriteLine("Task Finished Successfully");
 
-            cancellationTokenSource.Cancel();
+            if (await Task.WhenAny(task, userQuitTask) == userQuitTask)
+            {
+                Console.WriteLine("User quit requested");
+                cancellationTokenSource.Cancel();
+                Console.WriteLine("Awaiting Task to Cancel!");
+                try { await task; }
+                catch { Console.WriteLine("Task Cancelled!"); }
+            }
+            else
+                Console.WriteLine("Task Finished Successfully");          
+
             Console.WriteLine("Bye World!");
         }
 

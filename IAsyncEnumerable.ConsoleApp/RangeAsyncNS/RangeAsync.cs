@@ -31,7 +31,6 @@ namespace IAsyncEnumerable.ConsoleApp.RangeAsyncNS
             foreach (var item in Enumerable.Range(Start, Count))
             {
                 await Task.Delay(1000, cancellationToken);
-                cancellationToken.ThrowIfCancellationRequested();
                 yield return item;
             }
         }
