@@ -24,7 +24,7 @@ namespace ChannelApp
                     Console.WriteLine($"Producer: {item}");
                 }
 
-                //channel.Writer.Complete();
+                channel.Writer.Complete();
             });
 
             await foreach (var item in channel.Reader.ReadAllAsync())
@@ -34,17 +34,6 @@ namespace ChannelApp
             }
 
             Console.WriteLine("Bye World!");
-        }
-
-        public class Data
-        {
-            public int Propriedade1 { get; set; }
-            public string Propriedade2 { get; set; } = string.Empty;
-        }
-
-        public static Task<Data> ObterData()
-        {
-
         }
     }
 }
